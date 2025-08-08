@@ -5,7 +5,7 @@ import { StoreContext } from '../../context/StoreContext';
 
 const Navbar = ({ setShowLogin }) => {
   const [menu, setMenu] = useState("menu");
-  const { getTotalCartAmount } = useContext(StoreContext);
+  const { getTotalCartAmount,token,setToken} = useContext(StoreContext);
 
   return (
     <div className='p-1 flex justify-between items-center'>
@@ -20,6 +20,7 @@ const Navbar = ({ setShowLogin }) => {
           } hover:border-black`}>
           Home
         </Link>
+       
 
         <a href='#Explore' onClick={() => setMenu("menu")}
           className={`pb-[2px] border-b-2 ${
@@ -54,12 +55,26 @@ const Navbar = ({ setShowLogin }) => {
             <div className="absolute min-w-5 min-h-5 bg-red-700 rounded-full top-0 right-0"></div>
           )}
         </div>
-
-        <button
+        <img className="p-1 w-10 h-10" src={assets.profile} alt="" />
+        <div className="relative">
+  <ul className="absolute top-full right-0">
+    <li className="p-0 "><img className='w-15 mt-10 h-10' src={assets.bag} alt=""  /><p>orders</p></li>
+    <li><img src={assets.logout} alt="" />Logoout</li>
+  </ul>
+</div>
+        
+        {!token?<button
           onClick={() => setShowLogin(true)}
-          className="px-[30px] py-[10px] lg:px-[25px] lg:py-[8px] md:px-[20px] md:py-[7px] text-white text-xl md:text-[15px] font-bold bg-purple-700 rounded-3xl hover:bg-purple-950">
+          className="px-2 py-1 text-white text-sm font-semibold bg-purple-700 rounded-2xl hover:bg-purple-950">
           Sign In
-        </button>
+        </button>:<div>
+         
+
+          
+          </div>
+          }
+
+        
       </div>
     </div>
   );

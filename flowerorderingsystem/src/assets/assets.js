@@ -77,10 +77,13 @@ import flowers from './flowers.png'
 import google from './google.png'
 import app from './app.jpg'
 import close from './close.png'
+import bag from './bag.png'
+import logout from './logout.png'
+import profile from './profile.png'
 
 
 export const assets = {
-  serch,al,birt,pass,flowers, app,linkedin,close,google,twitter, facebook,feuneral,bb,blue,daliy,bi,bas,fle,lavender,mail,ro,pur,rose,s,tiulip,w,wed,white,ss,cart,icon,weddin,icon2,raiting1,
+  serch,al,birt,pass,logout,flowers,bag,profile, app,linkedin,close,google,twitter, facebook,feuneral,bb,blue,daliy,bi,bas,fle,lavender,mail,ro,pur,rose,s,tiulip,w,wed,white,ss,cart,icon,weddin,icon2,raiting1,
 add,add1,remove } 
 export const menu_list = [
   {menu_name: "Birthday",menu_image: or ,

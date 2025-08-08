@@ -7,13 +7,8 @@ import Placeorder from './pages/placeorder/Placeorder.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import Login from './components/Login/Login.jsx';
 
-
-
-
 const App = () => {
  const [ showLogin, setShowLogin] = useState(false)
-
-
 
   return (
     <>
