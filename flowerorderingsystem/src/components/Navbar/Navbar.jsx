@@ -55,22 +55,31 @@ const Navbar = ({ setShowLogin }) => {
             <div className="absolute min-w-5 min-h-5 bg-red-700 rounded-full top-0 right-0"></div>
           )}
         </div>
-        <img className="p-1 w-10 h-10" src={assets.profile} alt="" />
         <div className="relative">
-  <ul className="absolute top-full right-0">
-    <li className="p-0 "><img className='w-15 mt-10 h-10' src={assets.bag} alt=""  /><p>orders</p></li>
-    <li><img src={assets.logout} alt="" />Logoout</li>
+  <img
+    className="p-1 w-10 h-10 cursor-pointer"
+    src={assets.profile}
+    alt="Profile"
+  />
+  <ul className="absolute top-full right-0 bg-white shadow-lg rounded-lg mt-2">
+    <li className="flex items-center gap-2 p-2 hover:bg-gray-100 cursor-pointer">
+      <img className="w-10 h-6" src={assets.bag} alt="Orders" />
+      <p>Orders</p>
+    </li>
+     <hr />
+    <li className="flex items-center gap-2 p-2 hover:bg-gray-100 cursor-pointer">
+      <img className="w-10 h-6" src={assets.logout} alt="Logout" />
+      <p>Logout</p>
+    </li>
   </ul>
 </div>
+
         
         {!token?<button
           onClick={() => setShowLogin(true)}
           className="px-2 py-1 text-white text-sm font-semibold bg-purple-700 rounded-2xl hover:bg-purple-950">
           Sign In
         </button>:<div>
-         
-
-          
           </div>
           }
 
