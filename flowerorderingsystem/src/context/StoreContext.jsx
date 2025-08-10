@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { boquet_list } from "../assets/assets";
 
 export const StoreContext = createContext(null);
@@ -42,6 +42,15 @@ const StoreContextProvider = (props) => {
     }
     return totalAmount;
   };
+  useEffect(()=>{
+     if (localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token"))
+      
+     } else {
+      
+     }
+
+  },[])
 
   const contextValue = {
     boquet_list,
