@@ -11,16 +11,20 @@ const Login = ({ setShowLogin }) => {
     email: "",
     password: "",
   });
+  const [message, setMessage] = useState("");      
+  const [loading, setLoading] = useState(false);   
 
-  // ✅ Clear form when modal opens
+  
   useEffect(() => {
     setData({ name: "", email: "", password: "" });
     setCurrState("Login");
+    setMessage("");
   }, [setShowLogin]);
 
-  // ✅ Clear form when switching between Login ↔ Sign Up
+  
   useEffect(() => {
     setData({ name: "", email: "", password: "" });
+    setMessage("");
   }, [currState]);
 
   const onChangeHandler = (event) => {
@@ -30,11 +34,14 @@ const Login = ({ setShowLogin }) => {
 
   const onLogin = async (event) => {
     event.preventDefault();
+    setLoading(true);
+    setMessage("");
 
     try {
       if (!url) {
         console.error("Backend URL is undefined");
         alert("Backend URL is not configured properly.");
+        setLoading(false);
         return;
       }
 
@@ -46,13 +53,22 @@ const Login = ({ setShowLogin }) => {
       if (response.data.success) {
         setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
-        setShowLogin(false);
+
+        setMessage("Your details have been saved successfully!");  
+
+       
+        setTimeout(() => {
+          setShowLogin(false);
+          setMessage("");
+        }, 2000);
       } else {
-        alert(response.data.message || "Something went wrong!");
+        setMessage(response.data.message || "Something went wrong!");
       }
     } catch (error) {
       console.error("Login/Register Error:", error);
-      alert("Something went wrong while connecting to the server.");
+      setMessage("Something went wrong while connecting to the server.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,7 +76,7 @@ const Login = ({ setShowLogin }) => {
     <div className="fixed inset-0 z-10 bg-black bg-opacity-60 grid">
       <form
         onSubmit={onLogin}
-        autoComplete="off" // ✅ prevent browser autofill
+        autoComplete="off" 
         className="place-self-center w-full max-w-[330px] text-[#000000090] bg-white flex flex-col gap-6 px-[30px] py-[25px] border-gray-300 shadow-md rounded-lg text-sm animate-fadeIn"
       >
         <div className="flex justify-between items-center">
@@ -103,22 +119,41 @@ const Login = ({ setShowLogin }) => {
             type="password"
             placeholder="Your password"
             required
-            autoComplete="new-password" // ✅ avoid password autofill
+            autoComplete="new-password" 
             className="border border-solid border-gray-300 px-4 py-2 rounded"
           />
         </div>
 
         <button
           type="submit"
-          className="cursor-pointer bg-[#130b0a] text-white text-[15px] border border-gray-300 px-4 py-2 rounded-full"
+          disabled={loading}
+          className={`cursor-pointer bg-[#130b0a] text-white text-[15px] border border-gray-300 px-4 py-2 rounded-full ${
+            loading ? "opacity-60 cursor-not-allowed" : ""
+          }`}
         >
-          {currState === "Sign Up" ? "Create account" : "Login"}
+          {loading
+            ? currState === "Sign Up"
+              ? "Creating..."
+              : "Logging in..."
+            : currState === "Sign Up"
+            ? "Create account"
+            : "Login"}
         </button>
 
         <div className="flex items-start gap-[8px] mt-[-10px]">
           <input type="checkbox" required className="mt-[5px]" />
           <p>By Continuing, I agree to the terms of use & privacy policy.</p>
         </div>
+
+        {message && (
+          <p
+            className={`text-center ${
+              message.includes("successfully") ? "text-green-600" : "text-red-600"
+            } font-medium`}
+          >
+            {message}
+          </p>
+        )}
 
         {currState === "Login" ? (
           <p>

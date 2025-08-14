@@ -4,12 +4,12 @@ import { StoreContext } from "../../context/StoreContext"
 
 const BoquetItem = ({id,name,price,description,image}) => {
 
-const{ cartItems,addToCart,removeCart} = useContext(StoreContext);
+const{ cartItems,addToCart,removeCart,url} = useContext(StoreContext);
     return(
 
         <div className=" w-full mx-auto rounded-[15px] shadow-[0_0_10px_rgba(0,0,0,0.1)] transition-all duration-300 animate-fadeIn p-4 bg-white ">
             <div className="relative  ">
-                <img className=" w-full rounded-t-[15px] " src={image} alt="" />
+                <img className=" w-full rounded-t-[15px] " src={url+"/images/"+image} alt="" />
                {!cartItems[id]
                ?<img className="rounded-full right-[25px] bottom-[15px]  absolute w-[40px]  cursor-pointer " onClick={()=>addToCart(id)} src={assets.add} alt=""  />
                :<div className=" absolute bottom-[15px] right-[25px] flex items-center gap-[1px] p-[4px] rounded-full bg-white">
