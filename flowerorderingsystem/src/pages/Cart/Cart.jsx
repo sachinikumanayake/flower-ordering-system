@@ -45,10 +45,11 @@ const Cart = () => {
         <div className="flex-1">
           <h2 className="font-bold text-lg mb-4">Cart Totals</h2>
           <div className="space-y-4 text-slate-500">
-            <div className="flex justify-between border-b pb-2">
-              <p>Subtotal</p>
-              <p>R{getTotalCartAmount()}</p>
-            </div>
+          <div className="flex justify-between border-b pb-2">
+  <p>Subtotal</p>
+  <p>R{getTotalCartAmount()}</p> 
+</div>
+
             <div className="flex justify-between border-b pb-2">
               <p>Delivery Fee</p>
               <p>{getTotalCartAmount}</p>
