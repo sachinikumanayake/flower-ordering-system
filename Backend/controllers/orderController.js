@@ -12,7 +12,6 @@ const placeOrder = async (req, res) => {
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET); 
         const userId = decodedToken.id;
 
-    // 2. ඇණවුම් දත්ත සකස් කිරීම
         const newOrder = new OrderModel({
             userId: userId,
             items: req.body.items,
