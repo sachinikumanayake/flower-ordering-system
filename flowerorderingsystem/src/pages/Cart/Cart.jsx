@@ -3,16 +3,14 @@ import { StoreContext } from '../../context/StoreContext';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
-  const { cartItems, boquet_list, removeCart, getTotalCartAmount } = useContext(StoreContext);
-  const navigate = useNavigate();
+ const { cartItems, boquet_list, removeCart, getTotalCartAmount } = useContext(StoreContext);
+ const navigate = useNavigate();
 
-  // බෙදාහැරීමේ ගාස්තුව නියත අගයක් ලෙස ලබා ගනිමු
-  // (ඔබගේ Total ගණනය අනුව 450ක් යැයි උපකල්පනය කර ඇත)
+ 
   const deliveryFee = 450;
   const subTotal = getTotalCartAmount();
   const totalAmount = subTotal + deliveryFee;
 
-  // කරත්තය හිස් දැයි පරීක්ෂා කරමු
   if (subTotal === 0) {
     return (
       <div className="pt-8 px-4 md:px-10">
@@ -74,11 +72,11 @@ const Cart = () => {
 
             <div className="flex justify-between border-b pb-2">
               <p>Delivery Fee</p>
-              <p>R{deliveryFee}</p> {/* ✅ නිවැරදි කිරීම: R450 දමන්න. */}
+              <p>R{deliveryFee}</p> 
             </div>
             <div className="flex justify-between font-semibold text-slate-700 border-b pb-2">
               <p>Total</p>
-              <p>R{totalAmount}</p> {/* ✅ නිවැරදි කිරීම: කලින් ගණනය කළ අගය භාවිතා කරන්න. */}
+              <p>R{totalAmount}</p> 
             </div>
           </div>
           <button

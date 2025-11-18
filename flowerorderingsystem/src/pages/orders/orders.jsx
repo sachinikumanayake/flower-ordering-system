@@ -2,17 +2,15 @@
 import React, { useContext, useState } from 'react';
 import { StoreContext } from "../../context/StoreContext";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // 👈 navigate කිරීම සඳහා
+import { useNavigate } from 'react-router-dom';
 
 const Orders = () => {
   const { getTotalCartAmount, token, boquet_list, cartItems, url, setCartItems } = useContext(StoreContext);
   const navigate = useNavigate();
   
-  // ඇණවුම් දත්ත (Delivery Fee)
   const deliveryFee = 450;
   const totalAmount = getTotalCartAmount() + deliveryFee;
 
-  // 1. 📦 Form දත්ත සඳහා State එක
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -25,18 +23,15 @@ const Orders = () => {
     phone: ""
   });
 
-  // 2. 📝 Form දත්ත වෙනස් වූ විට state එක update කිරීම
   const onChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setData(data => ({ ...data, [name]: value }));
   }
 
-  // 3. 🚀 Place Order API Call එක (ඇණවුම දත්ත ගබඩාවට යැවීම)
   const placeOrder = async (event) => {
-    event.preventDefault(); // Default form submit වීම නවතයි
+    event.preventDefault(); 
 
-    // 3.1. ඇණවුම සඳහා අවශ්‍ය දත්ත සකස් කිරීම
     let orderData = {
       address: data,
       items: boquet_list
@@ -50,22 +45,19 @@ const Orders = () => {
       amount: totalAmount,
     }
 
-    // 3.2. Back-end API එකට POST request එකක් යැවීම
     let response = await axios.post(url + "/api/order/place", orderData, { headers: { token } });
 
     if (response.data.success) {
-      // 3.3. ඇණවුම සාර්ථක නම්
-      setCartItems({}); // Local Cart එක හිස් කරන්න
-      navigate('/payment-success'); // සාර්ථක පිටුවකට යොමු කරන්න
-      alert("ඇණවුම සාර්ථකයි! දැන් ගෙවීම් පිටුවට යොමු කෙරේ.");
+      setCartItems({}); 
+      navigate('/payment-success'); 
+      alert("oerder success.");
     } else {
-      alert("ඇණවුම Place කිරීමේ දෝෂයක්. කරුණාකර නැවත උත්සාහ කරන්න.");
+      alert("Please try again!");
     }
   }
 
   return (
     <form onSubmit={placeOrder} className='flex items-start justify-between gap-[50px] mt-[100px] flex-col md:flex-row p-4'>
-      {/* 🚀 ඇණවුම් තොරතුරු (Delivery Information) */}
       <div className="w-full max-w-[500px] mx-auto md:mx-0">
         <p className='text-[30px] font-bold mb-[50px]'>Delivery Information</p>
         <div className='flex flex-col gap-3'>
@@ -104,8 +96,8 @@ const Orders = () => {
               <p>Total</p>
               <p>R{totalAmount}</p>
             </div>
-          </div>
-          {/* 🚨 Order Place කරන Button එක */}
+ </div>
+
           <button type='submit' className="mt-6 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded w-full">
             PLACE ORDER ({`R${totalAmount}`})
           </button>
