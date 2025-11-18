@@ -8,30 +8,48 @@ export const StoreContext = createContext(null);
 const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [boquet_list, setBoquetList] = useState([]);
-  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [userId, setUserId] = useState(localStorage.getItem("userId") || "");
   const url = "http://localhost:4000";
 
   // 🟢 Add item to cart
-  const addToCart = (itemId) => {
+  // StoreContext.jsx (Recommended changes)
+
+// ... states
+const [token, setToken] = useState(localStorage.getItem("token") || "");
+// const [userId, setUserId] = useState(localStorage.getItem("userId") || ""); // ❌ මෙය ඉවත් කරන්න
+
+// 🟢 Add item to cart
+const addToCart = async (itemId) => {
     setCartItems((prev) => ({
-      ...prev,
-      [itemId]: (prev[itemId] || 0) + 1,
+        ...prev,
+        [itemId]: (prev[itemId] || 0) + 1,
     }));
-  };
+    if (token) {
+        // flowerId සහ quantity පමණක් යවන්න.
+        // User ID එක Back-end එකේදී token එකෙන් ගන්න.
+        await axios.post(url + "/api/cart/add", { flowerId: itemId, quantity: 1 }, { headers: { token } });
+    }
+};
 
-  
-  const removeCart = (itemId) => {
+// ... removeCart එකේද එසේ කරන්න
+
+// removeCart function එකේදී quantity 1 අඩු කිරීම සඳහා වෙනම API call එකක් යැවිය යුතුය.
+const removeCart = async (itemId) => {
     setCartItems((prev) => {
-      const updatedCart = { ...prev };
-      if (updatedCart[itemId] > 1) {
-        updatedCart[itemId] -= 1;
-      } else {
-        delete updatedCart[itemId];
-      }
-      return updatedCart;
+        const updatedCart = { ...prev };
+        if (updatedCart[itemId] > 1) {
+            updatedCart[itemId] -= 1;
+        } else {
+            delete updatedCart[itemId];
+        }
+        return updatedCart;
     });
-  };
 
+    if (token) {
+        // flowerId පමණක් යවන්න
+        await axios.post(url + "/api/cart/remove", { flowerId: itemId }, { headers: { token } });
+    }
+};;
 
   const getTotalCartAmount = () => {
     let totalAmount = 0;
