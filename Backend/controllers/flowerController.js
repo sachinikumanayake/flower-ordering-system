@@ -4,9 +4,7 @@ import fs from 'fs';
 const addFlower = async (req, res) => {
 
     try {
-        // ✅ Debug: Log file details
         console.log("REQ FILE:", req.file);
-
 
         let image_filename = req.file ? req.file.filename : null;
 
@@ -19,26 +17,32 @@ const addFlower = async (req, res) => {
         });
 
         await flower.save();
-        res.json({ success: true, message: "flower added" });
+        
+        // 🚨 නිවැරදි කරන ලද Response: 
+        // 200 OK හෝ 201 Created status එක සමඟ JSON response body එකක් යවන්න.
+        // මෙය Front-end එකේ if (response.data.success) { ... } logic එක ක්‍රියාත්මක කරයි.
+        res.json({ success: true, message: "Flower added successfully" }); // 200 OK (Default)
 
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: "Error" });
     }
 };
-//flower list
-const listFlower = async (req,res) => {try {
-    const flower = await flowerModel.find({});
-    res.json({success:true,data:flower})
-    
-} catch (error) {
-    console.log(error);
-    res.json({success:false,message:"Error"})
-    
+
+// flower list
+const listFlower = async (req,res) => {
+    try {
+        const flower = await flowerModel.find({});
+        res.json({success:true,data:flower})
+        
+    } catch (error) {
+        console.log(error);
+        res.json({success:false,message:"Error"})
+        
+    }
 }
 
-}
-//remove
+// remove
 const removeFlower = async (req,res) =>{
     try {
         const flower = await flowerModel.findById(req.body.id);

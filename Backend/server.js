@@ -3,6 +3,7 @@ import cors from "cors";
 import { connectDB } from "./config/db.js";
 import flowerRouter from "./routs/flowerRoute.js";
 import userRouter from "./routs/userRoute.js";
+import adminRouter from "./routs/adminRoute.js"; 
 import'dotenv/config'
 import cartRouter from "./routs/cartRoute.js";
 
@@ -13,7 +14,7 @@ const port =4000;
 
 // ✅ Middleware
 app.use(express.json());
-app.use(cors()); // 💡 This must come AFTER app is defined
+app.use(cors());
 
 // ✅ DB connection
 connectDB();
@@ -24,12 +25,13 @@ app.use("/images", express.static( "uploads"));
 
 app.use("/api/user",userRouter)
 app.use("/api/cart",cartRouter)
+app.use("/admin", adminRouter); // 🟢 Admin Routes මෙහිදී Mount කරන්න
 
 app.get("/", (req, res) => {
-  res.send("API Working");
+  res.send("API Working");
 });
 
 // ✅ Server listener
 app.listen(port, () => {
-  console.log(`Server started on http://localhost:${port}`);
+  console.log(`Server started on http://localhost:${port}`);
 });

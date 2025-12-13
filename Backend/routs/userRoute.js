@@ -1,14 +1,17 @@
+// server/routs/userRoute.js
+
 import express from "express"
-import { loginUser,regiUser } from "../controllers/userController.js"
+import { loginUser, regiUser } from "../controllers/userController.js" // adminLoginController ඉවත් කළා
+
 const userRouter = express.Router()
+
 userRouter.post("/register",regiUser)
 userRouter.post("/login",loginUser)
 
 
+
 userRouter.get("/test", (req, res) => {
-    res.send("User route works!");
-  });
-  
-
-
+    res.send("User route works!");
+  });
+  
 export default userRouter;
