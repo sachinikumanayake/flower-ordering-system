@@ -1,5 +1,4 @@
 import userModel from "../models/userModel.js";
-import useModel from "../models/userModel.js"
 
 
 // add items
