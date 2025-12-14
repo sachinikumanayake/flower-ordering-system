@@ -7,6 +7,8 @@ import Footer from './components/Footer/Footer.jsx';
 import LoginPopup from './components/LoginPopup/LoginPopup.jsx'; 
 import Orders from './pages/Orders/Orders.jsx'; 
 import Navbar from './components/Navbar/Navbar.jsx';
+import Checkout from './pages/Checkout/Checkout';
+import Verify from './pages/Verify/Verify.jsx';
 
 const App = () => {
     
@@ -23,9 +25,9 @@ const App = () => {
                 <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/cart' element={<Cart />} />
-                    <Route path='/order' element={<PlaceOrder />} />
-                    <Route path='/orders' element={<Orders />} />
-                    
+                    <Route path='/orders' element={<PlaceOrder />} />
+                    <Route path='/order' element={<Checkout />} />
+                    <Route path='/verify' element={<Verify />} />
                 </Routes>
             </div>
             {!isAdminRoute && <Footer />}
