@@ -15,7 +15,6 @@ const Verify = () => {
     // Order Verification Function - Backend API Call
     // -------------------------------------------------------------
     const verifyPayment = async () => {
-        // Backend API එකට Call කර payment තත්ත්වය යවනු ලැබේ
         const response = await axios.post(url + "/api/order/verify", { orderId, success });
 
         if (response.data.success) {

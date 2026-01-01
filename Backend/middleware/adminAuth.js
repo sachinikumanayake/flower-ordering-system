@@ -1,9 +1,7 @@
-// middleware/adminAuth.js
 
 import jwt from 'jsonwebtoken';
 
 const adminAuth = (req, res, next) => {
-    // Authorization Header එක Bearer token එකක් ලෙස පරීක්ෂා කිරීම
     const token = req.headers.authorization?.split(' ')[1]; 
 
     if (!token) {
@@ -13,7 +11,6 @@ const adminAuth = (req, res, next) => {
     try { 
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET); 
         
-        // Role පරීක්ෂාව
         if (decodedToken.role !== 'admin') {
             return res.status(403).json({ success: false, message: "Access Denied. Admin privileges required." });
         }

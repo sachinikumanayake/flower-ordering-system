@@ -55,9 +55,9 @@ const Navbar = ({ setShowLogin }) => {
                     <Link to='/cart'>
                     <img src={assets.cart} alt="Cart" className="w-10 h-10 cursor-pointer" />
                     </Link>
-                    {getTotalCartAmount() > 0 && <div className="absolute w-2 h-2 bg-purple-600 rounded-full -top-1 -right-1"></div>}
-                </div>
-
+{getTotalCartAmount() > 0 && (
+  <div className="absolute w-[10px] h-[10px] bg-black rounded-full -top-1 -right-1 block leading-none"></div>
+)} </div>
                 {token ? (
                     // User Profile Dropdown
                     <div className="relative">

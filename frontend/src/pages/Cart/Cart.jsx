@@ -3,7 +3,6 @@ import { StoreContext } from 'shared-context';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
- // 🛑 FIX: StoreContext වෙතින් 'url' එක ලබා ගන්න
  const { cartItems, boquet_list, removeCart, getTotalCartAmount, url } = useContext(StoreContext);
  const navigate = useNavigate();
 
@@ -41,17 +40,13 @@ const Cart = () => {
         <p>Remove</p>
       </div>
 
-      {/* Cart Items */}
       {boquet_list.map((item) => {
         if (cartItems[item._id] > 0) {
-          // 🛑 FIX: සම්පූර්ණ URL එක මෙහිදී සාදා ගන්න
           const fullImageUrl = `${url}/images/${item.image}`; 
           
           return (
             <div key={item._id} className="py-4 border-b border-gray-200">
-             {/* පෙර පිළිතුරේ දුන් Grid Fix එක ද මෙහි තිබේ. (Desktop & Mobile) */}
              <div className="grid grid-cols-[1fr_2fr_1fr_1fr_1fr_0.5fr] md:grid-cols-[1fr_1.5fr_1fr_1fr_1fr_0.5fr] items-center gap-2 text-sm">
-               {/* 🛑 FIX: src එකට fullImageUrl එක භාවිතා කරන්න */}
                 <img src={fullImageUrl} alt={item.name} className="w-[80px] h-[80px] object-cover" /> 
                 <p>{item.name}</p>
                 <p className="hidden md:block">R{item.price}</p> 
