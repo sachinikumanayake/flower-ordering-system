@@ -1,4 +1,3 @@
-// client/src/context/StoreContext.jsx (Cleaned Code)
 
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
@@ -6,41 +5,37 @@ import axios from "axios";
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
-    // 🟢 Constants
     const url = "http://localhost:4000";
     
-    // 🟢 State Variables
     const [cartItems, setCartItems] = useState({});
     const [boquet_list, setBoquetList] = useState([]);
     const [token, setToken] = useState(localStorage.getItem("token") || "");
     const [role, setRole] = useState(localStorage.getItem("role") || "");
+    
+    const [search, setSearch] = useState("");
 
 
-    // 1. Fetching Bouquet List from Backend
     const fetchBoquetList = async () => {
         try {
-            // API call to get the list of flowers
             const response = await axios.get(url + "/api/flower/list");
             if (response.data.success) {
                 setBoquetList(response.data.data);
             }
         } catch (error) {
             console.error("API error while fetching bouquets:", error);
-            // Optionally add toast error here
         }
     };
     
-    // 2. Load Cart Data (Placeholder logic, needs backend implementation)
-        const loadCartData = async (token) => {
-                try {
-                    const response = await axios.post(url + "/api/cart/get", {}, { headers: { token } });
-                    if (response.data.success) {
-                        setCartItems(response.data.cartData); // Assuming backend sends cart data in response.data.cartData
-                    }
-                } catch (error) {
-                    console.error("Could not load cart data:", error);
-                }
-            };
+    const loadCartData = async (token) => {
+        try {
+            const response = await axios.post(url + "/api/cart/get", {}, { headers: { token } });
+            if (response.data.success) {
+                setCartItems(response.data.cartData);
+            }
+        } catch (error) {
+            console.error("Could not load cart data:", error);
+        }
+    };
 
     // 3. Add Item to Cart
     const addToCart = (itemId) => {
@@ -51,7 +46,6 @@ const StoreContextProvider = (props) => {
                 return { ...prev, [itemId]: prev[itemId] + 1 };
             }
         });
-        // Logic to send cart update to backend should be added here
     };
 
     // 4. Remove Item from Cart
@@ -64,7 +58,6 @@ const StoreContextProvider = (props) => {
             }
             return newCart;
         });
-        // Logic to send cart update to backend should be added here
     };
 
     // 5. Calculate Total Cart Amount
@@ -89,7 +82,6 @@ const StoreContextProvider = (props) => {
             const response = await axios.post(url + "/api/user/login", formData);
             
             if (response.data.success) {
-                // Set token and role in localStorage and state
                 const userRole = response.data.role || 'user';
                 localStorage.setItem("token", response.data.token);
                 localStorage.setItem("role", userRole); 
@@ -131,18 +123,20 @@ const StoreContextProvider = (props) => {
     }, []);
 
     const contextValue = {
-        boquet_list, // The list of products
+        boquet_list,
         cartItems,
         setCartItems,
         addToCart,
         removeCart,
         getTotalCartAmount,
-        url, // 🟢 Exporting URL for image paths and API calls
+        url,
         token,
         setToken,
         role,
         loginUser,
         logoutUser,
+        search,   
+        setSearch  
     };
 
     return (
