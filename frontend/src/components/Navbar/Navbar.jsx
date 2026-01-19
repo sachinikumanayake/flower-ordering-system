@@ -51,14 +51,14 @@ const Navbar = ({ setShowLogin }) => {
 
     return (
         <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-            scrolled ? "bg-white/80 backdrop-blur-md shadow-sm py-3" : "bg-white py-5"
+            scrolled ? "bg-white shadow-sm py-3" : "bg-white py-5"
         }`}>
             <div className='max-w-[1400px] mx-auto px-6 flex justify-between items-center'>
                 <Link to='/' className='flex items-center group'>
                     <h1 className='text-2xl md:text-3xl font-serif font-extrabold tracking-tighter'>
                         <span className='text-pink-500 group-hover:text-pink-600 transition-colors'>pink</span>
-                        <span className='text-gray-800 ml-1 italic'>Flora</span>
-                    </h1>
+                        <span className='text-pink-500 ml-1 italic'>Flora</span>
+                                        </h1>
                 </Link>
         
                 <ul className={`hidden md:flex items-center gap-10 text-[15px] ${isSearchOpen ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100'} transition-all duration-300`}>

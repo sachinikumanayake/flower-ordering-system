@@ -35,9 +35,7 @@ const Checkout = () => {
         setCardData(prev => ({ ...prev, [name]: value }));
     };
 
- // ... කලින් තිබූ imports ඒ ආකාරයෙන්ම තබන්න
-
-const placeOrder = async (event) => {
+    const placeOrder = async (event) => {
     event.preventDefault();
     
     let orderItems = [];
@@ -48,28 +46,37 @@ const placeOrder = async (event) => {
         }
     });
 
-    // මෙහිදී cardData (cardNumber, expiry, cvv) එකතු කර යවන්න
+    if (orderItems.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
     let orderData = {
         address: data,
         items: orderItems,
         amount: totalAmount,
-        cardInfo: cardData 
+        // cardInfo අවශ්‍ය නම් පමණක් ඇතුළත් කරන්න
     };
 
     try {
-        let response = await axios.post(url + "/api/order/place", orderData, {
-            headers: { Authorization: `Bearer ${token}` } 
+        const response = await axios.post(url + "/api/order/place", orderData, {
+            headers: { 
+                Authorization: `Bearer ${token}` 
+            } 
         });
 
         if (response.data.success) {
             alert("✅ Order Placed Successfully!");
-            setCartItems({}); 
-            navigate('/myorders'); 
+            setCartItems({}); // Cart එක frontend එකෙනුත් හිස් කිරීම
+            
+            // Stripe නැති නිසා කෙලින්ම Verify හෝ Success පිටුවට orderId එක සමඟ යැවීම
+            navigate(`/verify?success=true&orderId=${response.data.orderId}`); 
         } else {
             alert("❌ " + response.data.message);
         }
     } catch (error) {
-        alert("Something went wrong. Make sure backend is running.");
+        console.error("Order Error:", error);
+        alert("❌ Error: Could not place order. Check backend console.");
     }
 };
 
