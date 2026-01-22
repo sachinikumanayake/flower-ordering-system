@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { StoreContext } from "../../../../shared/context/StoreContext";
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 const Checkout = () => {
     const { getTotalCartAmount, token, boquet_list, cartItems, url, setCartItems } = useContext(StoreContext);
@@ -55,7 +56,7 @@ const Checkout = () => {
         address: data,
         items: orderItems,
         amount: totalAmount,
-        // cardInfo අවශ්‍ය නම් පමණක් ඇතුළත් කරන්න
+        
     };
 
     try {
@@ -65,11 +66,23 @@ const Checkout = () => {
             } 
         });
 
-        if (response.data.success) {
-            alert("✅ Order Placed Successfully!");
-            setCartItems({}); // Cart එක frontend එකෙනුත් හිස් කිරීම
+if (response.data.success) {
+    setCartItems({}); 
+
+    Swal.fire({
+        title: 'Success!',
+        text: 'Order Placed Successfully!',
+        icon: 'success',
+        confirmButtonText: 'View My Orders',
+        confirmButtonColor: '#3085d7',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            navigate('/myorders'); 
+        }
+    });
+
+        
             
-            // Stripe නැති නිසා කෙලින්ම Verify හෝ Success පිටුවට orderId එක සමඟ යැවීම
             navigate(`/verify?success=true&orderId=${response.data.orderId}`); 
         } else {
             alert("❌ " + response.data.message);

@@ -1,38 +1,47 @@
-import orderModel from '../models/orderModel.js';
-import userModel from '../models/userModel.js';
+import orderModel from "../models/orderModel.js";
+import userModel from "../models/userModel.js";
 
-// Stripe අවශ්‍ය නැති නිසා stripePackage සහ stripe initialize කොටස් ඉවත් කළා
-
+// Placing User Order from Frontend
 const placeOrder = async (req, res) => {
     try {
-        // 1. අලුත් Order එකක් නිර්මාණය කිරීම
         const newOrder = new orderModel({
-            userId: req.body.userId, 
+            userId: req.body.userId, // Decoded from authMiddleware
             items: req.body.items,
             amount: req.body.amount,
             address: req.body.address,
-            payment: true // Stripe නැති නිසා කෙලින්ම true ලෙස හෝ අවශ්‍ය නම් false ලෙස තැබිය හැක
+            cardInfo: req.body.cardInfo, 
+            payment: true, 
+            status: "Order Placed"
         });
-        
-        // 2. Database එකේ Save කිරීම
+
         await newOrder.save();
-        
-        // 3. පරිශීලකයාගේ Cart එක හිස් කිරීම
+
+        // Clearing User Cart Data
         await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} });
 
-        // 4. සාර්ථක පණිවිඩය සහ orderId එක යැවීම
-        res.json({ success: true, message: "Order Placed Successfully", orderId: newOrder._id });
+        res.json({ success: true, message: "Order placed successfully" });
 
     } catch (error) {
-        console.error("Order Error:", error);
+        console.log(error);
         res.json({ success: false, message: "Error placing order" });
     }
 }
 
-// verifyOrder අවශ්‍ය වන්නේ Stripe වැනි payment gateway එකක් තිබේ නම් පමණි. 
-// නමුත් ඔබගේ route වල තිබේ නම් මෙය තබා ගන්න.
-const verifyOrder = async (req, res) => {
-    res.json({ success: true, message: "Manual Verification Not Required" });
+// Fetching User Orders for Frontend "My Orders" page
+const userOrders = async (req, res) => {
+    try {
+        // Find all orders belonging to the specific userId
+        const orders = await orderModel.find({ userId: req.body.userId });
+        res.json({ success: true, data: orders });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Error fetching orders" });
+    }
 }
 
-export { placeOrder, verifyOrder };
+// Keep verifyOrder if you are using it for other purposes
+const verifyOrder = async (req, res) => {
+    // Your verify logic here
+}
+
+export { placeOrder, userOrders, verifyOrder };

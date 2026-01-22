@@ -7,6 +7,7 @@ import LoginPopup from './components/LoginPopup/LoginPopup.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Checkout from './pages/Checkout/Checkout';
 import Verify from './pages/Verify/Verify.jsx';
+import MyOrders from './components/MyOrders/Myorders.jsx';
 
 const App = () => {
     
@@ -19,8 +20,9 @@ const App = () => {
             
             {!isAdminRoute && <Navbar setShowLogin={setShowLogin} />}
             
-            <div className={`w-full ${!isAdminRoute ? 'max-w-[1400px] mx-auto' : ''} min-h-screen`}>
-                <Routes>
+            <div className={`w-full ${!isAdminRoute ? 'max-w-[1400px] mx-auto pt-24' : ''} min-h-screen`}>
+                                <Routes>
+                    <Route path='/myorders' element={<MyOrders />} />
                     <Route path='/' element={<Home />} />
                     <Route path='/cart' element={<Cart />} />
                     <Route path='/order' element={<Checkout />} />                   
