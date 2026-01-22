@@ -6,6 +6,7 @@ import userRouter from "./routs/userRoute.js";
 import adminRouter from "./routs/adminRoute.js"; 
 import'dotenv/config'
 import cartRouter from "./routs/cartRoute.js";
+import orderRouter from './routs/orderRoute.js';
 
 // ✅ App config
 const app = express();
@@ -25,8 +26,8 @@ app.use("/images", express.static( "uploads"));
 
 app.use("/api/user",userRouter)
 app.use("/api/cart",cartRouter)
-app.use("/admin", adminRouter); // 🟢 Admin Routes මෙහිදී Mount කරන්න
-
+app.use("/admin", adminRouter); 
+app.use("/api/order", orderRouter);
 app.get("/", (req, res) => {
   res.send("API Working");
 });
