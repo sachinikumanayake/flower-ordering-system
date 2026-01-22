@@ -1,5 +1,3 @@
-// client/admin/pages/Login/Login.jsx (FIXED: TypeError: saveToken is not a function)
-
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -13,7 +11,6 @@ const Login = () => {
 
   const navigate = useNavigate();
   
-  // 🛑 FIX: saveToken is replaced by the correct function from context: loginAdmin
   const { loginAdmin, url } = useContext(AdminAuthContext); 
 
   const handleAuth = async (e) => {
@@ -53,7 +50,6 @@ const Login = () => {
   };
 
   return (
-    // ... (JSX is unchanged) ...
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="w-96 p-6 bg-white rounded shadow">
         <h2 className="text-2xl mb-4 font-bold text-center">Admin {currentState}</h2>
@@ -80,7 +76,6 @@ const Login = () => {
           </button>
         </form>
 
-        {/* Register/Login Toggle Link */}
         <div className="mt-4 text-center">
           {currentState === "Login" ? (
             <p>

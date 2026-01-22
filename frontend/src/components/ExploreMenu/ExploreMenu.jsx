@@ -1,31 +1,21 @@
-// src/components/ExploreMenu/ExploreMenu.jsx
-
 import React from 'react';
 import { menu_list, video, video1, video2 } from '../../assets/assets';
 
 const ExploreMenu = ({ category, setCategory }) => {
   return (
-    <div className="flex flex-col gap-8 sm:gap-10 pt-10" id='Explore'>
-      
+    <div className="flex flex-col gap-8 sm:gap-10 pt-10" id='explore'>
       <h1 
-    className="text-center font-bold text-3xl sm:text-4xl md:text-5xl 
-               text-transparent bg-clip-text 
-               animate-pulse
-               duration-1000" 
-    style={{ 
-        backgroundImage: 'linear-gradient(to right, #FF6B6B, #C874C6, #8E5AEC)' 
-    }}
->
-    -Pick the Perfect Flowers For...
-</h1>
+        className="text-center font-bold text-3xl sm:text-4xl md:text-5xl text-transparent bg-clip-text animate-pulse duration-1000" 
+        style={{ backgroundImage: 'linear-gradient(to right, #FF6B6B, #C874C6, #8E5AEC)' }}
+      >
+        - Pick the Perfect Flowers For...
+      </h1>
 
       <div className="flex gap-6 sm:gap-10 items-center overflow-x-auto no-scrollbar py-4">
         {menu_list.map((item, index) => (
           <div
             key={index}
-            onClick={() =>
-              setCategory(category === item.menu_name ? 'All' : item.menu_name)
-            }
+            onClick={() => setCategory(prev => prev === item.menu_name ? "All" : item.menu_name)}
             className="cursor-pointer text-center flex-shrink-0 group"
           >
             <div className="w-40 sm:w-48 md:w-52 h-40 sm:h-48 md:h-52 overflow-hidden rounded-full shadow-lg transition duration-300 group-hover:shadow-xl">
@@ -37,7 +27,7 @@ const ExploreMenu = ({ category, setCategory }) => {
                 }`}
               />
             </div>
-            <p className={`mt-3 font-serif font-semibold text-lg text-gray-800 transition ${
+            <p className={`mt-3 font-serif font-semibold text-lg transition ${
                  category === item.menu_name ? 'text-pink-600 font-extrabold' : 'text-gray-600'
             }`}>
               {item.menu_name}

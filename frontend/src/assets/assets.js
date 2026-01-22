@@ -4,6 +4,7 @@ import birt from './birt.jpg'
 import d from './d.jpg'
 import pass from './pass.png'
 import feuneral from './feuneral.jpg'
+import g from './g.jpg'
 import bb from './bb.jpg'
 import blue from './blue.jpg'
 import fl from './fl.jpg'
@@ -86,7 +87,7 @@ import tiulippur from './tiulip pur.jpg'
 
 
 export const assets = {
-  serch,al,birt,pass,logout,tiulipblue,d,tiulippur,flowers,backg,bag,profile, app,linkedin,close,google,twitter, facebook,feuneral,bb,blue,daliy,bi,bas,fle,lavender,mail,ro,pur,rose,s,tiulip,w,wed,white,ss,cart,icon,weddin,icon2,raiting1,
+  serch,al,birt,pass,logout,tiulipblue,d,g,tiulippur,flowers,backg,bag,profile, app,linkedin,close,google,twitter, facebook,feuneral,bb,blue,daliy,bi,bas,fle,lavender,mail,ro,pur,rose,s,tiulip,w,wed,white,ss,cart,icon,weddin,icon2,raiting1,
 add,add1,remove } 
 export const menu_list = [
   {menu_name: "Birthday",menu_image: or ,

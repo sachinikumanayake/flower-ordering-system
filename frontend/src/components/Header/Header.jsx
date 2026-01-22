@@ -38,11 +38,9 @@ const Header = () => {
                     />
 
  <div className='p-2 bg-white rounded-lg shadow-xl border border-gray-200 max-w-sm relative z-10'>
-<p className='text-sm text-gray-500 font-semibold mb-2 ml-1'>Find your desired gifts</p> 
  
-                            <button className='px-6 py-2 bg-pink-500 text-white font-semibold rounded-md hover:bg-pink-600 transition'>
-                               Shop Now
-                            </button>
+                           
+                            
                         </div>
                     
                 </div>

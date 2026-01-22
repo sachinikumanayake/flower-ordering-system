@@ -177,8 +177,8 @@ const Add = () => {
                             <option value="Birthday">Birthday</option>
                             <option value="Funeral">Funeral</option>
                             <option value="Wedding">Wedding</option>
-                            <option value="Mothers day">Mother's Day</option>
-                            <option value="Lovers day">Lover's Day</option>
+                            <option value="Mothers day">Mothers Day</option>
+                            <option value="Lovers day">Lovers Day</option>
                         </select>
                     </div>
 

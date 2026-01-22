@@ -4,7 +4,6 @@ import axios from "axios";
 export const AdminAuthContext = createContext(null);
 
 const AdminAuthContextProvider = ({ children }) => {
-    // adminToken සහ adminRole සඳහා State තබා ගනී
     const [adminToken, setAdminToken] = useState(localStorage.getItem("adminToken") || ""); 
     const [adminRole, setAdminRole] = useState(localStorage.getItem("adminRole") || "");
     
@@ -25,7 +24,6 @@ const AdminAuthContextProvider = ({ children }) => {
 
     const loginAdmin = async (formData) => {
         try {
-            // ✅ URL නිවැරදි කිරීම: ඔබගේ server.js ගොනුවේ ඇති /admin/login Route එකට ගැලපේ
             const response = await axios.post(url + "/admin/login", formData);
             
             if (response.data.success) {
@@ -35,7 +33,6 @@ const AdminAuthContextProvider = ({ children }) => {
                 setAdminToken(response.data.token);
                 setAdminRole(response.data.role || "admin");
                 
-                // සාර්ථක වූ විට success: true යවයි (Login.jsx සඳහා)
                 return { success: true, message: "Admin Login successful" };
             } else {
                 return { success: false, message: response.data.message };
@@ -48,11 +45,11 @@ const AdminAuthContextProvider = ({ children }) => {
 
     const contextValue = {
         url, 
-        adminToken, // ✅ App.js හිදී Redirect Logic සඳහා මෙය භාවිතා වේ
+        adminToken, 
         setAdminToken,
         adminRole,
         isLoading: isInitialLoading, 
-        loginAdmin, // ✅ Login.jsx හිදී Login කිරීමට මෙය භාවිතා වේ
+        loginAdmin, 
         logoutAdmin,
     };
 
