@@ -2,53 +2,51 @@ import React from 'react';
 import { menu_list, video, video1, video2 } from '../../assets/assets';
 
 const ExploreMenu = ({ category, setCategory }) => {
-  return (
-    <div className="flex flex-col gap-8 sm:gap-10 pt-10" id='explore'>
-      <h1 
-        className="text-center font-bold text-3xl sm:text-4xl md:text-5xl text-transparent bg-clip-text animate-pulse duration-1000" 
-        style={{ backgroundImage: 'linear-gradient(to right, #FF6B6B, #C874C6, #8E5AEC)' }}
-      >
-        - Pick the Perfect Flowers For...
-      </h1>
+  const videos = [video, video1, video2];
 
-      <div className="flex gap-6 sm:gap-10 items-center overflow-x-auto no-scrollbar py-4">
+  return (
+    <div className="flex flex-col gap-10 py-12 px-4 sm:px-8 max-w-7xl mx-auto" id='explore'>
+      <div className="text-center space-y-4">
+        <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-gray-900">
+          Pick the <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600">Perfect Flowers</span> For...
+        </h1>
+      </div>
+
+      {/* Categories */}
+      <div className="flex gap-8 items-start overflow-x-auto pb-6 pt-4 no-scrollbar scroll-smooth">
         {menu_list.map((item, index) => (
           <div
             key={index}
             onClick={() => setCategory(prev => prev === item.menu_name ? "All" : item.menu_name)}
-            className="cursor-pointer text-center flex-shrink-0 group"
+            className="flex flex-col items-center cursor-pointer min-w-fit group"
           >
-            <div className="w-40 sm:w-48 md:w-52 h-40 sm:h-48 md:h-52 overflow-hidden rounded-full shadow-lg transition duration-300 group-hover:shadow-xl">
-              <img
-                src={item.menu_image}
-                alt={item.menu_name}
-                className={`w-full h-full p-6 sm:p-8 object-cover rounded-full transition duration-300 transform group-hover:scale-105 ${
-                  category === item.menu_name ? 'border-4 border-pink-600' : 'opacity-80'
-                }`}
-              />
+            <div className={`relative p-1 rounded-full transition-all duration-500 ${category === item.menu_name ? 'bg-pink-500' : 'bg-transparent'}`}>
+              <div className="w-32 h-32 md:w-40 md:h-40 bg-white rounded-full overflow-hidden p-1">
+                <img src={item.menu_image} alt="" className="w-full h-full object-cover rounded-full" />
+              </div>
             </div>
-            <p className={`mt-3 font-serif font-semibold text-lg transition ${
-                 category === item.menu_name ? 'text-pink-600 font-extrabold' : 'text-gray-600'
-            }`}>
-              {item.menu_name}
-            </p>
+            <p className="mt-2 font-medium">{item.menu_name}</p>
           </div>
         ))}
       </div>
 
-      <hr className="mx-auto w-full h-1 bg-pink-100 border-none my-6" />
-
-      <div className="flex flex-col lg:flex-row justify-center gap-8 mt-4">
-        {[video, video1, video2].map((vid, i) => (
-          <video
-            key={i}
-            className="rounded-xl shadow-2xl w-full sm:w-[400px] h-[250px] object-cover border-4 border-pink-200"
-            src={vid}
-            controls
-            autoPlay
-            muted
-            loop
-          />
+      {/* Video Section - Full Correct Implementation */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {videos.map((vidSrc, i) => (
+          <div key={i} className="rounded-2xl overflow-hidden shadow-lg bg-black aspect-video">
+            <video
+              className="w-full h-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+              preload="metadata"
+            >
+              <source src={vidSrc} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
         ))}
       </div>
     </div>
