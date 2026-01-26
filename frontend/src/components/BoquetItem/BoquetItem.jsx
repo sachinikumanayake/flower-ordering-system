@@ -3,6 +3,7 @@ import { assets } from "../../assets/assets";
 import { StoreContext } from "shared-context"; 
 
 const BoquetItem = ({ id, name, price, description, image }) => {
+  // context eken ena data access karanna
   const { cartItems, addToCart, removeCart, url } = useContext(StoreContext); 
 
   const isBackendImage = typeof image === 'string' && !image.startsWith('data:');
@@ -19,7 +20,8 @@ const BoquetItem = ({ id, name, price, description, image }) => {
           />
           
           <div className=" bottom-2 mt-2 right-2">
-              {!cartItems[id] ? (
+              {/* මෙතන cartItems?.[id] ලෙස වෙනස් කළා. එතකොට undefined වුණත් error එකක් එන්නේ නැහැ */}
+              {!cartItems?.[id] ? (
                 <img
                 className="w-8 h-8 cursor-pointer hover:scale-110 transition rounded-full border-2 border-gray-300 bg-transparent object-contain"                 
                 onClick={() => addToCart(id)}
@@ -34,7 +36,8 @@ const BoquetItem = ({ id, name, price, description, image }) => {
                     src={assets.remove}
                     alt="Remove"
                   />
-                  <p className="text-xs font-bold px-1 text-gray-800">{cartItems[id]}</p>
+                  {/* මෙතනත් ? පාවිච්චි කරන්න */}
+                  <p className="text-xs font-bold px-1 text-gray-800">{cartItems?.[id]}</p>
                   <img
                     className="w-8 h-8 cursor-pointer object-contain"
                     onClick={() => addToCart(id)}

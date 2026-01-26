@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "axios": "^1.13.2",
+    "framer-motion": "^12.29.0",
     "lucide-react": "^0.554.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.5.3",
+    "react-router-dom": "^7.12.0",
     "react-toastify": "^11.0.5",
-    "shared-context": "file:../shared"
+    "shared-context": "file:../shared",
+    "sweetalert2": "^11.26.17"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",

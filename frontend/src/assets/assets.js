@@ -20,6 +20,8 @@ import pur from './pur.jpg'
 import rose from './rose.jpg'
 import s from './s.jpg'
 import tiulip from './tiulip.png'
+import shoping from './shoping.png'
+
 import w from './w.jpg'
 import wed from './wed.jpg'
 import white from './white.jpg'
@@ -83,11 +85,13 @@ import logout from './logout.png'
 import profile from './profile.png'
 import backg from './backg.jpg'
 import tiulipblue from './tiulip blue.jpg'
-import tiulippur from './tiulip pur.jpg'
+import front from './front.jpg'
+import shop from './shop.jpg'
+
 
 
 export const assets = {
-  serch,al,birt,pass,logout,tiulipblue,d,g,tiulippur,flowers,backg,bag,profile, app,linkedin,close,google,twitter, facebook,feuneral,bb,blue,daliy,bi,bas,fle,lavender,mail,ro,pur,rose,s,tiulip,w,wed,white,ss,cart,icon,weddin,icon2,raiting1,
+  serch,al,birt,pass,logout,shop,shoping,front,tiulipblue,d,g,flowers,backg,bag,profile, app,linkedin,close,google,twitter, facebook,feuneral,bb,blue,daliy,bi,bas,fle,lavender,mail,ro,pur,rose,s,tiulip,w,wed,white,ss,cart,icon,weddin,icon2,raiting1,
 add,add1,remove } 
 export const menu_list = [
   {menu_name: "Birthday",menu_image: or ,
