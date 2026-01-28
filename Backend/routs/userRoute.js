@@ -1,7 +1,5 @@
-// server/routs/userRoute.js
-
 import express from "express"
-import { loginUser, regiUser } from "../controllers/userController.js" // adminLoginController ඉවත් කළා
+import { loginUser, regiUser } from "../controllers/userController.js" 
 
 const userRouter = express.Router()
 

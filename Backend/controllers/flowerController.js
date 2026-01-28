@@ -18,10 +18,7 @@ const addFlower = async (req, res) => {
 
         await flower.save();
         
-        // 🚨 නිවැරදි කරන ලද Response: 
-        // 200 OK හෝ 201 Created status එක සමඟ JSON response body එකක් යවන්න.
-        // මෙය Front-end එකේ if (response.data.success) { ... } logic එක ක්‍රියාත්මක කරයි.
-        res.json({ success: true, message: "Flower added successfully" }); // 200 OK (Default)
+        res.json({ success: true, message: "Flower added successfully" }); 
 
     } catch (error) {
         console.log(error);

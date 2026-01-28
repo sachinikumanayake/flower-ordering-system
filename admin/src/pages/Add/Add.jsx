@@ -1,22 +1,15 @@
-// File Path: admin/src/pages/Add/Add.jsx
-
 import React, { useContext, useState } from "react"; 
 import axios from "axios";
 import { toast } from "react-toastify";
 
-// Admin panel හි ඇති assets ෆෝල්ඩරයට යන path එක
 import { assets } from "../../assets/assets.js"; 
-// Admin Auth Context එකට යන path එක
 import { AdminAuthContext } from "../../context/AdminAuthContext.jsx"; 
-// 🔑 Store Context එකට යන path එක (shared ෆෝල්ඩරයේ ඇති)
 import { StoreContext } from "../../../../shared/context/StoreContext.jsx"; 
 
 const Add = () => {
-    // 1. Context Values ලබා ගැනීම
     const { token: clientToken, url: storeUrl } = useContext(StoreContext); 
     const { adminToken } = useContext(AdminAuthContext);
     
-    // Backend URL එක, StoreContext වෙතින් ලැබේ
     const finalUrl = storeUrl; 
 
     // 2. State Variables
@@ -25,20 +18,17 @@ const Add = () => {
         name: "",
         description: "",
         price: "",
-        category: "Funeral", // Default category
+        category: "Funeral", 
     });
 
-    // 3. Input Change Handler
     const onChangeHandler = (event) => {
         const { name, value } = event.target;
         setData((prevData) => ({ ...prevData, [name]: value }));
     };
     
-    // 4. Submit Handler (Form Submission)
     const onSumbitHandler = async (event) => {
         event.preventDefault();
 
-        // Admin Token එකට ප්‍රමුඛතාවය ලබා දීම
         const tokenToSend = adminToken || clientToken; 
         
         if (!tokenToSend) { 
@@ -47,7 +37,6 @@ const Add = () => {
             return;
         }
 
-        // 4.1. FormData සැකසීම
         const formData = new FormData();
         formData.append("name", data.name);
         formData.append("description", data.description);
@@ -61,20 +50,15 @@ const Add = () => {
             return;
         }
 
-        // 4.2. API Call එක
         try {
             const response = await axios.post(`${finalUrl}/api/flower/add`, formData, {
                 headers: {
-                    // Content-Type: multipart/form-data යනු image upload සඳහා අත්‍යවශ්‍ය වේ
                     "Content-Type": "multipart/form-data",
-                    // ✅ Token එක Authorization Header එක ලෙස යැවීම (403 fix)
                     "Authorization": `Bearer ${tokenToSend}`, 
                 },
             });
 
-            // 4.3. Success/Error Handling
             if (response.data.success) {
-                // Success: Form එක reset කිරීම
                 setData({
                     name: "",
                     description: "",
@@ -117,7 +101,6 @@ const Add = () => {
                         className="w-20 h-20 flex items-center justify-center border border-dashed border-gray-600 rounded cursor-pointer hover:border-red-400 transition"
                     >
                         <img
-                            // තෝරාගත් image එක preview කිරීම
                             src={image ? URL.createObjectURL(image) : assets.upload}
                             key={image ? image.name : "default"}
                             alt="Upload Icon"

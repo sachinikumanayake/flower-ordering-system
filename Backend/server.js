@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import 'dotenv/config'; // Meka uda thiyena eka hodai
+import 'dotenv/config'; 
 import { connectDB } from "./config/db.js";
 import flowerRouter from "./routs/flowerRoute.js";
 import userRouter from "./routs/userRoute.js";
