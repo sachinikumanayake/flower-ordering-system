@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { StoreContext } from "../../../../shared/context/StoreContext";
+import { assets } from '../../assets/assets';
 
 const MyOrders = () => {
     const { url, token } = useContext(StoreContext);
@@ -53,11 +54,17 @@ const MyOrders = () => {
                     <div className='flex justify-center py-20 italic text-gray-400'>Loading orders...</div>
                 ) : data.length === 0 ? (
                     <div className='text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm'>
-                        <p className='text-gray-400 font-medium'>Your order history is empty.</p>
-                    </div>
+                        <p className='text-gray-400 font-serif font-bold text-xl mr-48'>Your order history is empty.</p> <div className="mt-12 flex gap-4 opacity-30 "> </div>
+                      <img  src={assets.shoping} className='w-40 h-40 ml-96' />   
+                      <div className='mr-48 opacity-60'>   
+                    <span className="text-4xl">🌸</span>
+                    <span className="text-4xl">🌹</span>
+                    <span className="text-4xl">🌻</span> </div>
+                </div>
+                    
+                    
                 ) : (
                     <div className='flex flex-col gap-6'>
-                        {/* ලොග් වූ user ගේ orders පමණක් මෙතන පෙන්වයි */}
                         {data.map((order, index) => (
                             <div 
                                 key={index} 

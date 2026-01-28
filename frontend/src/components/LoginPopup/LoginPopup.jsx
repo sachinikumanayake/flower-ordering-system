@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { assets } from "../../assets/assets";
-// LoginPopup.jsx eke meka danna
 import { StoreContext } from "../../../../shared/context/StoreContext";
 import axios from "axios";
 
 const Login = ({ setShowLogin }) => {
-  // StoreContext eken loginUser function eka ganna
   const { url, setToken, loginUser } = useContext(StoreContext);
   
   const [currState, setCurrState] = useState("Login");
@@ -18,14 +16,12 @@ const Login = ({ setShowLogin }) => {
   const [message, setMessage] = useState("");      
   const [loading, setLoading] = useState(false);   
 
-  // Popup eka open/close wena wita data reset kirima
   useEffect(() => {
     setData({ name: "", email: "", password: "" });
     setCurrState("Login");
     setMessage("");
   }, [setShowLogin]);
 
-  // Login/Sign Up state maru wena wita data reset kirima
   useEffect(() => {
     setData({ name: "", email: "", password: "" });
     setMessage("");
@@ -36,23 +32,19 @@ const Login = ({ setShowLogin }) => {
     setData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // Main Login function eka
   const onLogin = async (event) => {
     event.preventDefault();
     setLoading(true);
     setMessage("");
 
-    // Context eke thiyena loginUser function eka call kirima
     const result = await loginUser(data, currState);
 
     if (result.success) {
       setMessage("Success!");
-      // Seconds 1.5 kin pasuwa popup eka close kirima
       setTimeout(() => {
         setShowLogin(false);
       }, 1500);
     } else {
-      // Error message eka penwima
       setMessage(result.message);
     }
     setLoading(false);

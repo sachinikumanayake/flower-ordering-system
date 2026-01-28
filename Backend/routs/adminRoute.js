@@ -1,5 +1,3 @@
-// server/routs/adminRoute.js
-
 import express from 'express';
 import { adminLogin, adminRegister } from '../controllers/adminController.js'; 
 

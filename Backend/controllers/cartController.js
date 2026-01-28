@@ -1,88 +1,50 @@
-import Cart from "../models/cartModel.js";
-
+import userModel from "../models/userModel.js";
 
 const getCart = async (req, res) => {
-    try {
-        
-        let cartData = await Cart.findOne({ userId: req.body.userId });
-        
-        let cartItems = {};
-        if (cartData && cartData.items) {
-            cartData.items.forEach((item) => {
-                if (item.flowerId) {
-                    cartItems[item.flowerId] = item.quantity;
-                }
-            });
-        }
-        
-        res.json({ success: true, cartItems });
-    } catch (error) {
-        console.log("Get Cart Error:", error);
-        res.json({ success: false, message: "Error fetching cart" });
-    }
-};
+   try {
+      let userData = await userModel.findById(req.body.userId);
+      let cartData = await userData.cartData || {}; 
+      res.json({ success: true, cartData });
+   } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: "Error fetching cart" });
+   }
+}
 
 const addToCart = async (req, res) => {
-    try {
-        const { userId, itemId } = req.body; 
+   try {
+      let userData = await userModel.findById(req.body.userId);
+      let cartData = await userData.cartData || {};
 
-        if (!itemId) {
-            return res.json({ success: false, message: "Item ID is required" });
-        }
+      if (!cartData[req.body.itemId]) {
+         cartData[req.body.itemId] = 1;
+      } else {
+         cartData[req.body.itemId] += 1;
+      }
 
-        let cartData = await Cart.findOne({ userId: userId });
-
-        if (!cartData) {
-            cartData = new Cart({
-                userId: userId,
-                items: [{ flowerId: itemId, quantity: 1 }]
-            });
-        } else {
-        
-            const itemIndex = cartData.items.findIndex(item => 
-                item.flowerId && item.flowerId.toString() === itemId.toString()
-            );
-
-            if (itemIndex > -1) {
-                cartData.items[itemIndex].quantity += 1;
-            } else {
-                cartData.items.push({ flowerId: itemId, quantity: 1 });
-            }
-        }
-
-        await cartData.save();
-        res.json({ success: true, message: "Added To Cart" });
-    } catch (error) {
-        console.log("Add To Cart Error:", error);
-        res.json({ success: false, message: "Error adding to cart" });
-    }
-};
-
+      await userModel.findByIdAndUpdate(req.body.userId, { cartData });
+      res.json({ success: true, message: "Added To Cart" });
+   } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: "Error adding to cart" });
+   }
+}
 
 const removeFromCart = async (req, res) => {
-    try {
-        const { userId, flowerId } = req.body;
-        
-        let cartData = await Cart.findOne({ userId: userId });
-        if (cartData) {
-            const itemIndex = cartData.items.findIndex(item => 
-                item.flowerId && item.flowerId.toString() === flowerId.toString()
-            );
+   try {
+      let userData = await userModel.findById(req.body.userId);
+      let cartData = await userData.cartData || {};
 
-            if (itemIndex > -1) {
-                if (cartData.items[itemIndex].quantity > 1) {
-                    cartData.items[itemIndex].quantity -= 1;
-                } else {
-                    cartData.items.splice(itemIndex, 1);
-                }
-                await cartData.save();
-            }
-        }
-        res.json({ success: true, message: "Removed From Cart" });
-    } catch (error) {
-        console.log("Remove From Cart Error:", error);
-        res.json({ success: false, message: "Error removing from cart" });
-    }
-};
+      if (cartData[req.body.itemId] > 0) {
+         cartData[req.body.itemId] -= 1;
+      }
+
+      await userModel.findByIdAndUpdate(req.body.userId, { cartData });
+      res.json({ success: true, message: "Removed From Cart" });
+   } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: "Error removing from cart" });
+   }
+}
 
 export { addToCart, removeFromCart, getCart };

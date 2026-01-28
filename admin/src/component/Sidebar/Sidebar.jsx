@@ -1,5 +1,3 @@
-// admin/layout/Sidebar.jsx (FINAL CORRECTED CODE)
-
 import React from "react";
 import { assets } from "../../assets/assets";
 import { NavLink } from "react-router-dom";
@@ -8,7 +6,6 @@ const Sidebar = () => {
   return (
     <div className="bg-[#d6cef1] w-[40%] sm:w-[30%] md:w-[20%] lg:w-[18%] h-screen border-r border-[1.5px] border-[#a9a9a9] p-2 sm:p-3 md:p-4 flex flex-col gap-3 text-[10px] sm:text-sm">
       
-      {/* 1. Dashboard NavLink */}
       <NavLink
         to="/" 
         end 
@@ -25,7 +22,6 @@ const Sidebar = () => {
       </NavLink>
       
 
-      {/* 2. Add Items NavLink */}
       <NavLink
         to="/add"
         className={({ isActive }) =>
@@ -40,7 +36,6 @@ const Sidebar = () => {
         <p>Add Items</p>
       </NavLink>
       
-      {/* 3. List Items NavLink */}
       <NavLink
         to="/list" 
         className={({ isActive }) =>

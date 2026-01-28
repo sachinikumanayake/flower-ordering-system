@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { assets } from '../../assets/assets.js'; 
 import { Link, useNavigate } from 'react-router-dom';
-import { StoreContext } from '../../../../shared/context/StoreContext'; // path එක නිවැරදි කරගන්න
+import { StoreContext } from '../../../../shared/context/StoreContext'; 
 import { AdminAuthContext } from '../../../../admin/src/context/AdminAuthContext.jsx';
 
 const Navbar = ({ setShowLogin }) => {
@@ -10,7 +10,6 @@ const Navbar = ({ setShowLogin }) => {
     const [scrolled, setScrolled] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     
-    // මෙතනට logoutUser එක එකතු කළා
     const { getTotalCartAmount, token, setToken, search, setSearch, logoutUser } = useContext(StoreContext); 
     const { adminToken } = useContext(AdminAuthContext);
     const navigate = useNavigate();
@@ -24,7 +23,7 @@ const Navbar = ({ setShowLogin }) => {
     }, []);
 
     const logout = () => {
-        logoutUser(); // දැන් මෙය StoreContext එකෙන් ලැබෙන නිසා error එක එන්නේ නැහැ
+        logoutUser();
         setIsDropdownOpen(false);
         navigate("/");
     };
@@ -130,14 +129,14 @@ const Navbar = ({ setShowLogin }) => {
                                         onClick={() => {navigate('/myorders'); setIsDropdownOpen(false);}}
                                         className="w-full flex items-center gap-4 px-5 py-4 text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition-colors"
                                     >
-                                        <img src={assets.bag} alt="" className="w-6 h-6 opacity-70" />
+                                        <img src={assets.bag} alt="" className="w-12 h-10 opacity-70" />
                                         <span className='font-semibold text-sm'>My Orders</span>
                                     </button>
                                     <button 
                                         onClick={logout}
                                         className="w-full flex items-center gap-4 px-5 py-4 text-red-500 hover:bg-red-50 transition-colors"
                                     >
-                                        <img src={assets.logout} alt="" className="w-6 h-6 opacity-70" />
+                                        <img src={assets.logout} alt="" className="w-10 h-8 opacity-70" />
                                         <span className='font-semibold text-sm'>Sign Out</span>
                                     </button>
                                 </div>

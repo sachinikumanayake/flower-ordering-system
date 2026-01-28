@@ -2,13 +2,13 @@ import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { StoreContext } from "../../../../shared/context/StoreContext";
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 const Checkout = () => {
     const { getTotalCartAmount, token, boquet_list, cartItems, url, setCartItems } = useContext(StoreContext);
     const navigate = useNavigate();
-    
-    const deliveryFee = 450; 
+
+    const deliveryFee = 450;
     const subTotal = getTotalCartAmount();
     const totalAmount = subTotal + deliveryFee;
 
@@ -37,61 +37,51 @@ const Checkout = () => {
     };
 
     const placeOrder = async (event) => {
-    event.preventDefault();
-    
-    let orderItems = [];
-    boquet_list.forEach((item) => {
-        if (cartItems[item._id] > 0) {
-            let itemInfo = { ...item, quantity: cartItems[item._id] };
-            orderItems.push(itemInfo);
-        }
-    });
+        event.preventDefault();
 
-    if (orderItems.length === 0) {
-        alert("Your cart is empty!");
-        return;
-    }
-
-    let orderData = {
-        address: data,
-        items: orderItems,
-        amount: totalAmount,
-        
-    };
-
-    try {
-        const response = await axios.post(url + "/api/order/place", orderData, {
-            headers: { 
-                Authorization: `Bearer ${token}` 
-            } 
+        let orderItems = [];
+        boquet_list.forEach((item) => {
+            if (cartItems[item._id] > 0) {
+                let itemInfo = { ...item, quantity: cartItems[item._id] };
+                orderItems.push(itemInfo);
+            }
         });
 
-if (response.data.success) {
-    setCartItems({}); 
-
-    Swal.fire({
-        title: 'Success!',
-        text: 'Order Placed Successfully!',
-        icon: 'success',
-        confirmButtonText: 'View My Orders',
-        confirmButtonColor: '#3085d7',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            navigate('/myorders'); 
+        if (orderItems.length === 0) {
+            Swal.fire('Info', 'Your cart is empty!', 'info');
+            return;
         }
-    });
 
-        
-            
-            navigate(`/verify?success=true&orderId=${response.data.orderId}`); 
-        } else {
-            alert("❌ " + response.data.message);
+        let orderData = {
+            address: data,
+            items: orderItems,
+            amount: totalAmount,
+        };
+
+        try {
+            const response = await axios.post(url + "/api/order/place", orderData, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            if (response.data.success) {
+                setCartItems({}); // Reset frontend cart
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Order Placed Successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'View My Orders',
+                    confirmButtonColor: '#15803d',
+                }).then((result) => {
+                    navigate('/myorders');
+                });
+            } else {
+                Swal.fire('Error', response.data.message, 'error');
+            }
+        } catch (error) {
+            console.error("Order Error:", error);
+            Swal.fire('Error', 'Check backend connection', 'error');
         }
-    } catch (error) {
-        console.error("Order Error:", error);
-        alert("❌ Error: Could not place order. Check backend console.");
-    }
-};
+    };
 
     return (
         <form onSubmit={placeOrder} className='max-w-[1100px] mx-auto my-10 p-5 font-sans bg-gray-50 rounded-lg'>
@@ -109,7 +99,6 @@ if (response.data.success) {
                             <input required name='city' onChange={onChangeHandler} value={data.city} type="text" placeholder='City' className='w-full p-2 border rounded-md outline-green-400' />
                         </div>
                     </div>
-
                     <div className='bg-white p-6 rounded-xl shadow-sm border border-gray-100'>
                         <h3 className='text-xl font-bold mb-5'>Payment Card Details</h3>
                         <div className='space-y-4 p-4 bg-blue-50 rounded-lg'>
@@ -121,7 +110,6 @@ if (response.data.success) {
                         </div>
                     </div>
                 </div>
-
                 <div className='bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-fit'>
                     <h3 className='text-xl font-bold mb-5'>Your Order Summary</h3>
                     <div className='space-y-3 border-t pt-4'>

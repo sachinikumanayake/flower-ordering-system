@@ -1,21 +1,18 @@
 import React, { useState, useContext } from "react";
 import { assets } from "../../assets/assets";
-import { AdminAuthContext } from "../../context/AdminAuthContext"; // Context එක import කරන්න
+import { AdminAuthContext } from "../../context/AdminAuthContext"; 
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false);
-  const { setAdminToken } = useContext(AdminAuthContext); // Token එක reset කරන්න මෙය අවශ්‍යයි
+  const { setAdminToken } = useContext(AdminAuthContext); 
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // 1. Context එකේ තියෙන token එක අයින් කරන්න
     setAdminToken(null);
     
-    // 2. LocalStorage එකෙන් අයින් කරන්න
     localStorage.removeItem("adminToken"); 
     
-    // 3. Login පේජ් එකට navigate කරන්න
     navigate("/login");
     
     console.log("Logged out successfully");
